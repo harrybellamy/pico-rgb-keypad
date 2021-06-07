@@ -6,6 +6,13 @@ import usb_hid
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 
+import usb_midi
+import adafruit_midi
+
+from adafruit_midi.note_on import NoteOn
+from adafruit_midi.note_off import NoteOff
+from adafruit_midi.control_change import ControlChange
+
 from digitalio import DigitalInOut, Direction
 
 import animations
@@ -38,6 +45,40 @@ animations.topLeftToBottomRight(buttonStates.pixels, colourwheel)
 buttonStates.released()
 
 animations.clockwiseSpiral(buttonStates.pixels, colourwheel)
+
+midi = adafruit_midi.MIDI(midi_out=usb_midi.ports[1], out_channel=0)
+
+noteMap = [
+    "D#3",
+    "B2",
+    "G2",
+    "D#2",
+    "D3",
+    "A#2",
+    "F#2",
+    "D2",
+    "C#3",
+    "A2",
+    "F2",
+    "C#2",
+    "C3",
+    "G#2",
+    "E2",
+    "C2"
+]
+
+while True:
+
+    index = buttonStates.getFirstPressedButtonIndex()
+
+    if not index == -1:
+        note = noteMap[index]
+        if not note is None:
+            midi.send(NoteOn(note, 120))
+            time.sleep(0.1)
+            midi.send([NoteOff(note, 120),
+               ControlChange(3, 44)])
+
 
 buttonActions = [
     None,
