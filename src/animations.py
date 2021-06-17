@@ -1,6 +1,7 @@
 import time
+from colourwheel import colourwheel
 
-def topLeftToBottomRight(pixels, colourwheel) :
+def topLeftToBottomRight(pixels) :
     animationOrder = [[]]
     animationOrder.append([12])
     animationOrder.append([8, 13])
@@ -10,9 +11,9 @@ def topLeftToBottomRight(pixels, colourwheel) :
     animationOrder.append([2, 7])
     animationOrder.append([3])
 
-    animate(pixels, colourwheel, animationOrder)
+    animate(pixels, animationOrder)
 
-def clockwiseSpiral(pixels, colourwheel) :
+def clockwiseSpiral(pixels) :
     animationOrder = [
         3, 7, 11, 15,
         14, 13, 12,
@@ -26,7 +27,7 @@ def clockwiseSpiral(pixels, colourwheel) :
         pixels[pixel] = colourwheel(24)
         time.sleep(0.2)
 
-def animate(pixels, colourwheel, animationOrder) :
+def animate(pixels, animationOrder) :
     previousRow = None
 
     for row in animationOrder:
