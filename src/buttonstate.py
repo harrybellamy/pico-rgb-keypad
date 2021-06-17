@@ -50,7 +50,6 @@ class ButtonState:
         pressed = self.read_button_states(0, self.num_pixels)
         retval = 1
         for i in indexes:
-            print("Pressed for " + str(i) + ": " + str(pressed[i]))
             retval = retval & pressed[i]
             
         return retval
